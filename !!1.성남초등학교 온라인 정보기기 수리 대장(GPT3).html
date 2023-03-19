@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>성남초등학교 정보 기기 수리 요청</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        td, th {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        button {
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align:center">성남초등학교 정보 기기 수리 요청</h1>
+    <table>
+        <tr>
+            <td style="width: 15%"><input type="text" id="requester" placeholder="요청하는 사람"></td>
+            <td style="width: 70%"><input type="text" id="repair-details" placeholder="수리 내용" style="width: 100%"></td>
+            <td style="width: 25%"><button id="submit-request" onclick="submitRequest()">수리 요청 사항 전송</button></td>
+        </tr>
+    </table>
+    <h2 style="text-align:center">정보 기기 수리 접수 내용</h2>
+    <table id="repair-table">
+        <tr>
+            <th>요청한 사람</th>
+            <th>수리 내용</th>
+            <th>접수 완료</th>
+            <th>완료 시각</th>
+        </tr>
+    </table>
+
+    <script>
+        let repairTable = document.getElementById("repair-table");
+
+        function submitRequest() {
+            let requester = document.getElementById("requester").value;
+            let repairDetails = document.getElementById("repair-details").value;
+            let submitTime = new Date().toLocaleString();
+
+            let newRow = repairTable.insertRow(-1);
+
+            newRow.insertCell(0).innerHTML = requester;
+            newRow.insertCell(1).innerHTML = repairDetails;
+            newRow.insertCell(2).innerHTML = "<button onclick='markAsComplete(this)'>수리완료되면 이 버튼을 누르세요</button>";
+            newRow.insertCell(3).innerHTML = submitTime;
+
+            document.getElementById("requester").value = "";
+            document.getElementById("repair-details").value = "";
+        }
+
+        function markAsComplete(button) {
+            button.style.backgroundColor = "linear-gradient(to right, pink, hotpink)";
+            button.style.color = "white";
+            button.disabled = true;
+
+            let completionTimeCell = button.parentElement.nextElementSibling;
+            completionTimeCell.innerHTML = new Date().toLocaleString();
+        }
+    </script>
+</body>
+</html>
